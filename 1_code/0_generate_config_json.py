@@ -1,3 +1,5 @@
+import json
+
 read_me_text="""
 # Project Title
 *Give an explanation about the project.*
@@ -71,3 +73,12 @@ jup_nb_file = """
  "nbformat_minor": 2
 }
 """
+
+if __name__ == '__main__':
+    data = {
+        'jup_nb_file':jup_nb_file,
+        'structure_read_me_text':structure_read_me_text,
+        'read_me_text':read_me_text
+        }
+    with open('2_pipeline/0_generate_config_json/out/config.json', 'w') as outfile:
+        json.dump(data, outfile)
