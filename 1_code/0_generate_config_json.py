@@ -1,3 +1,20 @@
+"""
+Small script to generate a "config.json" file including the description texts
+for the generate_project script. This makes them easier to write and not be
+hardcoded into the script.
+
+If run from prompt without any parameters, the "config.json" file will be
+written at the location of this script. If run with the parameter "dev_mode"
+the file will be written in the output folder associated with this script in
+the development folder structure given on github.
+
+This file contains the parameters:
+- read_me_text: Markdown text to be put into the README file.
+- structure_read_me_text: Markdown text explaining the generated folder structure and how it is used.
+- jup_nb_file: Content of an empty .ipynb file to be written by the main script if any is specified.
+"""
+
+import sys
 import json
 
 read_me_text="""
@@ -37,6 +54,8 @@ structure_read_me_text="""
 - Only load data into the code from either `0_data` or any of the `out` folders in the `2_pipeline` sub-folders.
    - Only load data from `out` folders belonging to code files that are executed before the current file.
 - Always set working directory as top-level project directory and use relative paths.
+
+Credit for the structure and further documentation can be found in [this blogpost](https://towardsdatascience.com/how-to-keep-your-research-projects-organized-part-1-folder-structure-10bd56034d3a). (I know, he included a web-script, but I wanted to do it myself.)
 """
 
 jup_nb_file = """
@@ -80,5 +99,10 @@ if __name__ == '__main__':
         'structure_read_me_text':structure_read_me_text,
         'read_me_text':read_me_text
         }
-    with open('2_pipeline/0_generate_config_json/out/config.json', 'w') as outfile:
-        json.dump(data, outfile)
+    if len(sys.argv) > 1:
+        if 'dev_mode' in sys.argv[1:]:
+            with open('2_pipeline/0_generate_config_json/out/config.json', 'w') as outfile:
+                json.dump(data, outfile)
+    else:
+        with open('config.json', 'w') as outfile:
+            json.dump(data, outfile)

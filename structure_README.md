@@ -17,3 +17,5 @@
 - Only load data into the code from either `0_data` or any of the `out` folders in the `2_pipeline` sub-folders.
    - Only load data from `out` folders belonging to code files that are executed before the current file.
 - Always set working directory as top-level project directory and use relative paths.
+
+Credit for the structure and further documentation can be found in [this blogpost](https://towardsdatascience.com/how-to-keep-your-research-projects-organized-part-1-folder-structure-10bd56034d3a). (I know, he included a web-script, but I wanted to do it myself.)
