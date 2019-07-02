@@ -8,6 +8,7 @@ import json
 
 home_dir = os.path.isfile('config.json')
 dev_dir = os.path.isfile('2_pipeline/0_generate_config_json/out/config.json')
+proj_dir = os.path.isfile('generate_coding_project/2_pipeline/0_generate_config_json/out/config.json')
 
 if home_dir:
     config_exists=True
@@ -16,6 +17,10 @@ if home_dir:
 elif dev_dir:
     config_exists=True
     with open('2_pipeline/0_generate_config_json/out/config.json') as json_config:
+        config_data = json.load(json_config)
+elif proj_dir:
+    config_exists=True
+    with open('generate_coding_project/2_pipeline/0_generate_config_json/out/config.json') as json_config:
         config_data = json.load(json_config)
 else:
     config_exists=False
@@ -29,11 +34,11 @@ class project_gen:
         self.in_development=dev
 
     def create_folders(self):
-        if in_development:
+        if self.in_development:
             os.chdir('3_output')
         else:
-            if os.path.isdir('python_projects'):
-                os.chdir('python_projects')
+            if os.getcwd().split('\\')[-1] == ('python_projects'):
+                pass
             else:
                 os.mkdir('python_projects')
                 os.chdir('python_projects')
@@ -85,7 +90,7 @@ if __name__ == '__main__':
         project_name = sys.argv[1]
         if 'dev_mode' in sys.argv[2:]:
             param_list = sys.argv[2:]
-            param_list.del('dev_mode')
+            param_list.remove('dev_mode')
             PROJ = project_gen(p_name=project_name, f_list=param_list, dev=True)
         else:
             param_list = sys.argv[2:]
